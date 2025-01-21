@@ -1,5 +1,7 @@
-#ifdef MODEL_H
-#define MODELS_H
+#ifndef MODEL_H
+#define MODEL_H
+
+#include <stdbool.h>
 
 typedef struct {
     char img[256];
@@ -46,4 +48,7 @@ typedef struct {
     Timezone timezone;
 } IPInfo;
 
+IPInfo parse_http_response(char *response);
+
+#endif /* MODEL_H */
 

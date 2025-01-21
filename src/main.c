@@ -1,18 +1,16 @@
 #include <stdio.h>
-#include "request.c"
-#include "../lib/cJSON.c"
+#include "request.h"
+#include "cJSON.h"
+#include "model.h"
 
 int main() {
     
     CURLcode ret;
     char response_data[4096] = "";
-    char *ip = "8.8.8.8";
+    char ip[16];
+
     ret = perform_request(ip, response_data);
     
-    /*
-    cJSON *request_json = cJSON_Parse(response_data);
-    cJSON *continent = cJSON_GetObjectItem(request_json, "continent");
+    IPInfo ipinfo = parse_http_response(response_data);
 
-    printf("%s", continent->valuestring);
-    */
 }

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <curl/curl.h>
 #include <string.h>
+#include <request.h>
 
 size_t write_callback(void *ptr, size_t size, size_t nmemb, char *data) {
     size_t total_size = size*nmemb;
