@@ -1,3 +1,7 @@
-./tests
-./licensing
-./bin
+tests
+*.o
+*.o
+*.a
+*.out
+build
+.vscode
