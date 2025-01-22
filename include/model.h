@@ -48,6 +48,8 @@ typedef struct {
     Timezone timezone;
 } IPInfo;
 
+char *get_main_info(IPInfo ipinfo);
+
 IPInfo parse_http_response(char *response);
 
 #endif /* MODEL_H */

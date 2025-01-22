@@ -5,7 +5,6 @@
 #include "model.h"
 #include "cJSON.h"
 
-// Função auxiliar para strings
 void set_json_string(cJSON *json, const char *key, char *dest, size_t size) {
     cJSON *item = cJSON_GetObjectItem(json, key);
     if (item && cJSON_IsString(item)) {
@@ -13,7 +12,6 @@ void set_json_string(cJSON *json, const char *key, char *dest, size_t size) {
     }
 }
 
-// Função auxiliar para inteiros
 void set_json_int(cJSON *json, const char *key, int *dest) {
     cJSON *item = cJSON_GetObjectItem(json, key);
     if (item && cJSON_IsNumber(item)) {
@@ -21,7 +19,6 @@ void set_json_int(cJSON *json, const char *key, int *dest) {
     }
 }
 
-// Função auxiliar para doubles
 void set_json_double(cJSON *json, const char *key, double *dest) {
     cJSON *item = cJSON_GetObjectItem(json, key);
     if (item && cJSON_IsNumber(item)) {
@@ -29,7 +26,6 @@ void set_json_double(cJSON *json, const char *key, double *dest) {
     }
 }
 
-// Função auxiliar para booleanos
 void set_json_bool(cJSON *json, const char *key, bool *dest) {
     cJSON *item = cJSON_GetObjectItem(json, key);
     if (item && cJSON_IsBool(item)) {
@@ -37,8 +33,15 @@ void set_json_bool(cJSON *json, const char *key, bool *dest) {
     }
 }
 
+char *get_main_info(IPInfo ipinfo) {
+    char *info = malloc(1024);
+    snprintf(info, 1024, "IP: %s\nCountry: %s (%s)\nRegion: %s (%s)\nCity: %s\nLocation: %f %f\nZip Code: %s\nASN: %d %s\nISP: %s\nTZ: %s\n",
+        ipinfo.ip, ipinfo.country, ipinfo.country_code, ipinfo.region, ipinfo.region_code, ipinfo.city, ipinfo.latitude, ipinfo.longitude, ipinfo.postal, ipinfo.connection.asn, ipinfo.connection.org, ipinfo.connection.isp, ipinfo.timezone.id);
+    return info;
+}
+
 IPInfo parse_http_response(char *response) {
-    IPInfo ipinfo = {0};  // Inicializa tudo zerado
+    IPInfo ipinfo = {0};  
 
     cJSON *json = cJSON_Parse(response);
     if (!json) {
@@ -46,7 +49,7 @@ IPInfo parse_http_response(char *response) {
         return ipinfo;
     }
 
-    // Campos diretos
+
     set_json_string(json, "ip", ipinfo.ip, sizeof(ipinfo.ip));
     set_json_bool(json, "success", &ipinfo.success);
     set_json_string(json, "type", ipinfo.type, sizeof(ipinfo.type));
@@ -65,7 +68,7 @@ IPInfo parse_http_response(char *response) {
     set_json_string(json, "capital", ipinfo.capital, sizeof(ipinfo.capital));
     set_json_string(json, "borders", ipinfo.borders, sizeof(ipinfo.borders));
 
-    // Flag
+
     cJSON *flag = cJSON_GetObjectItem(json, "flag");
     if (flag) {
         set_json_string(flag, "img", ipinfo.flag.img, sizeof(ipinfo.flag.img));

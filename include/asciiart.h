@@ -5,6 +5,6 @@
 
 void to_lowercase(char* str);
 
-void print_country_art(const char* continent_code);
+char *get_country_art(const char* continent_code);
 
 #endif // ASCIIART_H
