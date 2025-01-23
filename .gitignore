@@ -1,8 +1,8 @@
 tests
+build
+bin
 *.o
 *.o
 *.a
 *.out
-build
-bin
 .vscode
