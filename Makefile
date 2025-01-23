@@ -1,15 +1,23 @@
 CC = gcc
 CFLAGS = -Iinclude
 LDFLAGS = -lcurl
+
 SRC = src/main.c src/model.c src/request.c src/asciiart.c lib/cJSON.c
-OBJ = $(SRC:.c=.o)
+OBJ = $(patsubst %.c, build/%.o, $(SRC))
 TARGET = bin/locatr
 
-$(TARGET): $(OBJ)
+$(TARGET): $(OBJ) | bin
 	$(CC) -o $(TARGET) $(OBJ) $(LDFLAGS)
 
-%.o: %.c
+build/%.o: %.c | build
+	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
+build:
+	mkdir -p build
+
+bin:
+	mkdir -p bin
+
 clean:
-	rm -f $(OBJ) $(TARGET)
+	rm -rf build bin

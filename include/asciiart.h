@@ -3,8 +3,8 @@
 
 #include <ctype.h>
 
-void to_lowercase(char* str);
+void ToLowercase(char* str);
 
-char *get_country_art(const char* continent_code);
+char *FetchCountryASCII(const char* continent_code);
 
 #endif // ASCIIART_H
